@@ -54,7 +54,8 @@ async function handleSearch(event) {
       Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
       return;
     }
-        gallery.innerHTML = createPhotoCard(images);
+    gallery.innerHTML = createPhotoCard(images);
+     Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
      if (images.totalHits > currentPage * perPage) {
       loadMoreBtn.style.display = "flex";
     } else {
@@ -98,7 +99,7 @@ async function loadMoreImages() {
     try {
     const images = await searchImages(searchQuery, currentPage);
       gallery.insertAdjacentHTML('beforeend', createPhotoCard(images));
-    if (images.totalHits > currentPage * perPage) {
+    if (images.totalHits >= (currentPage - 1) * perPage + images.hits.length) {
       loadMoreBtn.style.display = "flex";
     } else {
       loadMoreBtn.style.display = "none";

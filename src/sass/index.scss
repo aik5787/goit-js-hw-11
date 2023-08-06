@@ -42,7 +42,7 @@
 };
 
 .button:hover {
-    background-color: green;
+    background-color: blue;
 }
 
 .gallery {
@@ -54,6 +54,13 @@
 
 .load-more {
     display: none;
+    justify-content: center;
+align-items: center;
+    width: 120px;
+    height: 40px;
     margin: 20px auto;
+    background-color: black;
+    color: white;
+    cursor: pointer;
 
 }
