@@ -1,11 +1,12 @@
 @import './common';
 @import './example';
 .header {
-    position: fixed;
-    z-index: 99;
+    // position: fixed;
+    // z-index: 99;
     width: 100%;
     left: 0;
     top: 0;
+    margin-bottom: 20px;
 
     background: black;
     padding-top: 24px;
@@ -30,6 +31,7 @@
 
 .button {
     all: unset;
+    cursor: pointer;
 
     height: 100%;
     width: 30px;
@@ -37,4 +39,21 @@
     top: 0;
     transform: translateX(-100%);
     background-color: #c0c0c0;
+};
+
+.button:hover {
+    background-color: green;
+}
+
+.gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.load-more {
+    display: none;
+    margin: 20px auto;
+
 }
