@@ -1,12 +1,11 @@
 @import './common';
 @import './example';
 .header {
-    // position: fixed;
-    // z-index: 99;
+    position: fixed;
+    z-index: 99;
     width: 100%;
     left: 0;
     top: 0;
-    margin-bottom: 20px;
 
     background: black;
     padding-top: 24px;
@@ -47,9 +46,42 @@
 
 .gallery {
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: flex-start;
+margin-top: 60px;
     flex-wrap: wrap;
+    padding: 30px;
+    gap: 20px;
+}
+
+.photo-card {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    flex-basis: calc((100% - 60px) / 4);
+}
+
+.img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+   
+}
+.info {
+    padding: 0 10px;  
+    display: flex;
+    justify-content: space-between;
+    gap: 10px
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    align-items: center;
+}
+
+.b {
+    margin-bottom: 3px;
 }
 
 .load-more {
