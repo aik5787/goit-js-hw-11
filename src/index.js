@@ -1,11 +1,11 @@
 
 import Notiflix from 'notiflix';
-import axios from "axios";
+
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import { searchImages } from "./functions.js";
 
 
-const apiKey = "38632886-c853eefcb5943d1a53be12591";
 
 const searchForm = document.getElementById("search-form");
 const gallery = document.querySelector(".gallery");
@@ -31,31 +31,14 @@ searchForm.addEventListener('submit', handleSearch);
 
 
 
-async function searchImages(searchQuery, currentPage) {
-  const apiUrl = "https://pixabay.com/api/";
-  const params = new URLSearchParams({
-  key: apiKey,
-  q: searchQuery,
-  image_type: "photo",
-  orientation: "horizontal",
-    safesearch: true,
-  per_page: perPage,
-    page: currentPage,
-});
-     try {
-       const response = await axios.get(apiUrl, { params });
-    return response.data;
-  } catch (error) {
-    throw new Error('Error fetching images');
-  }
-}
+
  
 
 async function handleSearch(event) {
   event.preventDefault();
   observer.unobserve(target);
       const formData = new FormData(event.target);
-  const searchQuery = formData.get('searchQuery');
+  const searchQuery = formData.get('searchQuery').trim();
     if (!searchQuery) {
         return;
   };
@@ -110,23 +93,23 @@ function createPhotoCard(images) {
 
 
 async function onLoad(entries, observer) {
-  for (const entry of entries) {
+  entries.forEach(async (entry) => {
     if (entry.isIntersecting) {
-     currentPage += 1;
-  const searchQuery = input.value;
-    try {
-    const images = await searchImages(searchQuery, currentPage);
-      gallery.insertAdjacentHTML('beforeend', createPhotoCard(images));
-      lightbox.refresh();
-      if (images.totalHits < (currentPage - 1) * perPage + images.hits.length) {
-        observer.unobserve(target);
-            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
-      };
-  } catch (error) {
-    Notiflix.Notify.failure('Error fetching images');
-  }
-  }
-  };
+      currentPage += 1;
+      const searchQuery = input.value;
+      try {
+        const images = await searchImages(searchQuery, currentPage);
+        gallery.insertAdjacentHTML('beforeend', createPhotoCard(images));
+        lightbox.refresh();
+        if (images.totalHits < (currentPage - 1) * perPage + images.hits.length) {
+          observer.unobserve(target);
+          Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+        }
+      } catch (error) {
+        Notiflix.Notify.failure('Error fetching images');
+      }
+    }
+  });
 }
 
 
